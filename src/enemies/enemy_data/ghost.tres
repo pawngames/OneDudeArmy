@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://src/enemies/EnemyData.gd" type="Script" id=1]
+[ext_resource path="res://src/enemies/enemy_anim/Ghost.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://src/enemies/enemy_movement/movement_straight.gd" type="Script" id=3]
+
+[resource]
+script = ExtResource( 1 )
+health = 15
+attack = 5
+defense = 8
+speed = 35.0
+xp_gain = 2.0
+frames = ExtResource( 2 )
+offset_y = 0.0
+color = Color( 0.733333, 0.733333, 0.733333, 1 )
+_movement_script = ExtResource( 3 )

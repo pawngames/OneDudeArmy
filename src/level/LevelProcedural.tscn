@@ -1,0 +1,108 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://src/level/LevelProcedural.gd" type="Script" id=1]
+[ext_resource path="res://src/enemies/EnemySpawner.gd" type="Script" id=2]
+[ext_resource path="res://src/tiles/GroundTiles.tres" type="TileSet" id=3]
+[ext_resource path="res://src/player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/enemies/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/tiles/FoliageTiles.tres" type="TileSet" id=6]
+[ext_resource path="res://assets/kenney/kenney_foliagepack/Tilesheet/treeLeaves_default.png" type="Texture" id=7]
+[ext_resource path="res://src/items/Chest.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/level/Camera2D.gd" type="Script" id=9]
+[ext_resource path="res://src/level/UI.tscn" type="PackedScene" id=10]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+seed = 1
+period = 7.4
+persistence = 0.0
+lacunarity = 0.1
+
+[sub_resource type="TileSet" id=2]
+0/name = "treeLeaves_default.png 0"
+0/texture = ExtResource( 7 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 704, 0, 320, 192 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 0
+0/autotile/bitmask_flags = [ Vector2( 0, 0 ), 324, Vector2( 0, 1 ), 261, Vector2( 1, 0 ), 321, Vector2( 1, 1 ), 69, Vector2( 2, 0 ), 256, Vector2( 2, 1 ), 260, Vector2( 2, 2 ), 4, Vector2( 3, 0 ), 320, Vector2( 3, 1 ), 325, Vector2( 3, 2 ), 5, Vector2( 4, 0 ), 64, Vector2( 4, 1 ), 65, Vector2( 4, 2 ), 1 ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 64, 64 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="Curve" id=3]
+max_value = 100.0
+bake_resolution = 1000
+_data = [ Vector2( 0, 0 ), 0.0, 100.0, 0, 1, Vector2( 0.1, 10 ), -200.541, -200.541, 0, 0, Vector2( 0.199461, 17.2727 ), -228.505, -228.505, 0, 0, Vector2( 0.3, 30 ), -200.0, -200.0, 0, 0, Vector2( 0.4, 40 ), -200.0, -200.0, 0, 0, Vector2( 0.5, 50 ), -200.0, -200.0, 0, 0, Vector2( 0.6, 60 ), -200.0, -200.0, 0, 0, Vector2( 0.7, 70 ), -200.0, -200.0, 0, 0, Vector2( 0.8, 80 ), -200.0, -200.0, 0, 0, Vector2( 0.9, 90 ), -200.0, -200.0, 0, 0, Vector2( 1, 100 ), 100.0, 0.0, 1, 0 ]
+
+[node name="LevelProcedural" type="Node2D"]
+script = ExtResource( 1 )
+noise = SubResource( 1 )
+
+[node name="GroundTiles" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+cell_tile_origin = 1
+format = 1
+tile_data = PoolIntArray( -131074, 0, 131073, -65538, 0, 2, -65537, 0, 3, -131072, 0, 3, -131071, 0, 3, -131070, 0, 4, -2, 0, 65538, -1, 0, 65539, -65536, 0, 65539, -65535, 0, 65539, -65534, 0, 65540, 65534, 0, 65538, 65535, 0, 65539, 0, 0, 65539, 1, 0, 65539, 2, 0, 65540, 131070, 0, 65538, 131071, 0, 65539, 65536, 0, 65539, 65537, 0, 65539, 65538, 0, 65540, 196606, 0, 131074, 196607, 0, 131075, 131072, 0, 131075, 131073, 0, 131075, 131074, 0, 131076 )
+
+[node name="RoadTiles" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+cell_tile_origin = 1
+format = 1
+
+[node name="Scenery" type="YSort" parent="."]
+pause_mode = 1
+
+[node name="Player" parent="Scenery" instance=ExtResource( 4 )]
+use_parent_material = false
+
+[node name="EnemySpawner" type="Node2D" parent="Scenery"]
+script = ExtResource( 2 )
+enemy_scene = ExtResource( 5 )
+p_player = NodePath("../Player")
+level_curve = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="Scenery/EnemySpawner"]
+wait_time = 5.0
+autostart = true
+
+[node name="CollisionTiles" type="TileMap" parent="Scenery"]
+modulate = Color( 0.847059, 0.847059, 0.847059, 1 )
+tile_set = ExtResource( 6 )
+cell_tile_origin = 2
+cell_y_sort = true
+show_collision = true
+centered_textures = true
+format = 1
+
+[node name="Chest" parent="Scenery" instance=ExtResource( 8 )]
+position = Vector2( 141, -15 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+pause_mode = 2
+current = true
+script = ExtResource( 9 )
+p_target = NodePath("../Scenery/Player")
+
+[node name="UI" parent="Camera2D" instance=ExtResource( 10 )]
+margin_left = -509.0
+margin_top = -297.0
+margin_right = 520.0
+margin_bottom = 310.0
+p_player = NodePath("../../Scenery/Player")
+
+[connection signal="timeout" from="Scenery/EnemySpawner/Timer" to="Scenery/EnemySpawner" method="_on_Timer_timeout"]

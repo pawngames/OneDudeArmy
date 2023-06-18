@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/items/scenes/Shield.gd" type="Script" id=1]
+[ext_resource path="res://src/items/scenes/ShieldInst.tscn" type="PackedScene" id=2]
+
+[node name="Shield" type="Node2D"]
+position = Vector2( 0, -6 )
+script = ExtResource( 1 )
+SHIELD_INST_SCENE = ExtResource( 2 )

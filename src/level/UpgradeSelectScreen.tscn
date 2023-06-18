@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/level/UpgradeButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/level/UpgradeSelectScreen.gd" type="Script" id=2]
+
+[node name="UpgradeSelectScreen" type="HBoxContainer"]
+anchor_left = -0.146
+anchor_top = -0.167
+anchor_right = 0.154
+anchor_bottom = 0.167
+margin_left = -0.495987
+margin_top = 0.200005
+margin_right = 0.303986
+margin_bottom = -0.200005
+rect_min_size = Vector2( 300, 200 )
+script = ExtResource( 2 )
+
+[node name="UpgradeButton" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 100.0
+margin_bottom = 200.0
+
+[node name="UpgradeButton2" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 104.0
+margin_right = 204.0
+margin_bottom = 200.0
+
+[node name="UpgradeButton3" parent="." instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 208.0
+margin_right = 308.0
+margin_bottom = 200.0
+
+[connection signal="option_selected" from="UpgradeButton" to="." method="_on_UpgradeButton_option_selected"]
+[connection signal="option_selected" from="UpgradeButton2" to="." method="_on_UpgradeButton_option_selected"]
+[connection signal="option_selected" from="UpgradeButton3" to="." method="_on_UpgradeButton_option_selected"]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/items/coin_anim/2_coin_silver.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://src/items/Coin.gd" type="Script" id=2]
+[ext_resource path="res://assets/sparks.png" type="Texture" id=3]
+[ext_resource path="res://assets/sfx/Coin_Slide_Carpet.wav" type="AudioStream" id=4]
+
+[sub_resource type="SphereMesh" id=14]
+
+[sub_resource type="Gradient" id=15]
+colors = PoolColorArray( 0, 0, 0, 0.196078, 0, 0, 0, 0.196078 )
+
+[sub_resource type="GradientTexture" id=16]
+gradient = SubResource( 15 )
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 20, 22 )
+
+[sub_resource type="Curve" id=18]
+_data = [ Vector2( 0, 0 ), 0.0, 2.96077, 0, 0, Vector2( 1, 0 ), -4.21157, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=19]
+offsets = PoolRealArray( 0.716981, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="Coin" type="AnimatedSprite"]
+position = Vector2( 0, -17 )
+scale = Vector2( 0.7, 0.7 )
+frames = ExtResource( 1 )
+speed_scale = 2.0
+playing = true
+script = ExtResource( 2 )
+
+[node name="Shadow" type="MeshInstance2D" parent="."]
+modulate = Color( 1, 1, 1, 0.490196 )
+show_behind_parent = true
+position = Vector2( -2.98023e-08, 18.5714 )
+scale = Vector2( 15.3746, 4.5 )
+mesh = SubResource( 14 )
+texture = SubResource( 16 )
+
+[node name="Area2D" type="Area2D" parent="." groups=["Coin"]]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TimerVanish" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="TimerCollected" type="Timer" parent="."]
+
+[node name="Sparks" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 4
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+local_coords = false
+texture = ExtResource( 3 )
+emission_shape = 1
+emission_sphere_radius = 10.0
+direction = Vector2( 0, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 120.0
+initial_velocity_random = 0.5
+angular_velocity = 180.0
+angular_velocity_random = 0.5
+damping = 100.0
+damping_random = 0.5
+angle_random = 1.0
+scale_amount = 0.2
+scale_amount_random = 0.5
+scale_amount_curve = SubResource( 18 )
+color_ramp = SubResource( 19 )
+
+[node name="Collected" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="timeout" from="TimerVanish" to="." method="_on_TimerVanish_timeout"]
+[connection signal="timeout" from="TimerCollected" to="." method="_on_TimerCollected_timeout"]
