@@ -7,7 +7,13 @@
 <img src="imgs/logo_wide.png" align="left" width="400" height="254">
 
 # One Dude Army
-A Vampire Survivors Clone made in Godot.
+A Vampire Survivors Clone made in Godot. It's on really early stages, the level progression vs enemy strenght is far from ideal but i had fun making and playing it.
 
+<p align="center">
+Assets by
+<a href="https://www.kenney.nl/">
+  <img src="https://www.kenney.nl/" width="144" height="56">
+</a>
+</p>
 
 
