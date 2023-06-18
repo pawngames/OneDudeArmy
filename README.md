@@ -12,7 +12,7 @@ A Vampire Survivors Clone made in Godot. It's on really early stages, the level 
 <p align="center">
 Assets by
 <a href="https://www.kenney.nl/">
-  <img src="https://www.kenney.nl/" width="144" height="56">
+  <img src="https://www.kenney.nl/data/img/logo.png" width="144" height="56">
 </a>
 </p>
 
